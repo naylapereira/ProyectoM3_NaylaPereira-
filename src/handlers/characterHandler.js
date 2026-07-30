@@ -6,7 +6,14 @@ export function selectCharacter(card, appContainer) {
     ".character-card__name"
   ).textContent;
 
-  appContainer.innerHTML = chatView(characterName);
+  const characterImage = card.querySelector(
+    ".character-card__image"
+  ).src;
+
+  appContainer.innerHTML = chatView(
+    characterName,
+    characterImage
+  );
 
   initializeChat();
 }

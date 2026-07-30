@@ -1,5 +1,7 @@
-export function chatView(characterName) {
-  return `
+export function chatView(
+  characterName,
+  characterImage
+) {  return `
     <main class="chat">
 
       <header class="chat__header">
@@ -11,7 +13,16 @@ export function chatView(characterName) {
           ←
         </button>
 
-        <h1>${characterName}</h1>
+        <div class="chat__character">
+          <img
+            class="chat__character-image"
+            src="${characterImage}"
+            alt="${characterName}"
+            data-character-image
+          />
+
+          <h1 data-character-name>${characterName}</h1>
+        </div>
       </header>
 
       <section
