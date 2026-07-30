@@ -1,6 +1,8 @@
+import { navbar } from "./components/navbar.js";
 import { homeView } from "./views/homeView.js";
 import { charactersView } from "./views/charactersView.js";
 import { aboutView } from "./views/aboutView.js";
+import { selectCharacter } from "./handlers/characterHandler.js";
 
 const app = document.querySelector("#app");
 
@@ -14,7 +16,10 @@ function renderView() {
   const path = window.location.pathname;
   const selectedView = routes[path] || homeView;
 
-  app.innerHTML = selectedView();
+  app.innerHTML = `
+    ${navbar()}
+    ${selectedView()}
+  `;
 }
 
 function navigateTo(path) {
@@ -26,11 +31,7 @@ document.addEventListener("click", (event) => {
   const characterCard = event.target.closest("[data-character]");
 
   if (characterCard) {
-    document.querySelectorAll("[data-character]").forEach((card) => {
-      card.classList.remove("character-card--selected");
-    });
-
-    characterCard.classList.add("character-card--selected");
+    selectCharacter(characterCard, app);
     return;
   }
 
