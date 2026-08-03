@@ -23,6 +23,16 @@ export function chatView(
 
           <h1 data-character-name>${characterName}</h1>
         </div>
+
+        <button
+          type="button"
+          class="chat__clear-button"
+          data-clear-history
+          aria-label="Borrar historial"
+          title="Borrar historial"
+        >
+          🗑️
+        </button>
       </header>
 
       <section

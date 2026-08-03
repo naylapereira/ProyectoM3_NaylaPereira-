@@ -1,25 +1,72 @@
 import { getCurrentTime } from "./utils.js";
 import { getCharacterReply } from "./services/chatService.js";
-
-function scrollToLatestMessage(messagesContainer) {
-  messagesContainer.scrollTo({
-    top: messagesContainer.scrollHeight,
-    behavior: "smooth",
-  });
-}
+import { getWelcomeMessage } from "./utils/welcomeMessages.js";
+import { getConversation, addMessage } from "./services/conversationService.js";
+import { createCharacterMessage } from "./components/messages/characterMessage.js";
+import { createWelcomeMessage } from "./components/messages/welcomeMessage.js";
+import { createErrorMessage } from "./components/messages/errorMessage.js";
+import { renderConversation } from "./handlers/renderConversation.js";
+import { scrollToLatestMessage } from "./utils/scroll.js";
+import { getChatElements } from "./utils/chatElements.js";
+import { getCharacterName } from "./utils/getCharacterName.js";
+import { sendUserMessage } from "./handlers/sendUserMessage.js";
+import { focusInput } from "./utils/focusInput.js";
+import { showTypingIndicator } from "./handlers/showTypingIndicator.js";
+import { handleCharacterResponse } from "./handlers/handleCharacterResponse.js";
+import { initializeClearHistory } from "./handlers/clearHistory.js";
 
 export function initializeChat() {
-  const conversationHistory = [];
+  const elements = getChatElements();
 
-  const chatForm = document.querySelector(".chat__form");
-  const chatInput = document.querySelector(".chat__form input");
-  const messagesContainer = document.querySelector("#chat-messages");
-
-  if (!chatForm || !chatInput || !messagesContainer) {
+  if (!elements) {
     return;
   }
 
-  chatInput.focus();
+  const {
+    chatForm,
+    chatInput,
+    messagesContainer,
+    characterElement,
+    characterImage,
+  } = elements;
+
+  focusInput(chatInput);
+
+  const character = getCharacterName(characterElement);
+  
+  const conversationHistory = getConversation(character);
+
+  initializeClearHistory({
+    character,
+    characterImage,
+    messagesContainer,
+  });
+
+  renderConversation({
+    conversation: conversationHistory,
+    container: messagesContainer,
+    character,
+    characterImage,
+  });
+
+  scrollToLatestMessage(messagesContainer, false);
+
+  const welcomeMessage = createWelcomeMessage({
+    text: getWelcomeMessage(character),
+    time: getCurrentTime(),
+    imageSrc: characterImage.src,
+    imageAlt: character,
+  });
+
+  if (conversationHistory.length === 0) {
+    messagesContainer.appendChild(welcomeMessage);
+
+    addMessage(character, {
+      role: "model",
+      text: getWelcomeMessage(character),
+      time: getCurrentTime(),
+    });
+  }
 
   chatForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -30,131 +77,46 @@ export function initializeChat() {
       return;
     }
 
-    const messageElement = document.createElement("article");
-
-    messageElement.classList.add(
-      "chat-message",
-      "chat-message--user"
-    );
-
-    messageElement.innerHTML = `
-      <p class="chat-message__text">${messageText}</p>
-      <time class="chat-message__time">${getCurrentTime()}</time>
-    `;
-
-    messagesContainer.appendChild(messageElement);
-    
-    conversationHistory.push({
-      role: "user",
-      text: messageText,
+    sendUserMessage({
+      character,
+      messageText,
+      messagesContainer,
+      chatInput,
     });
 
-    chatInput.value = "";
-    chatInput.focus();
-
-    scrollToLatestMessage(messagesContainer);
-
-    const typingMessage = document.createElement("article");
-
-    typingMessage.classList.add(
-      "chat-message",
-      "chat-message--character",
-      "chat-message--typing"
-    );
-
-    typingMessage.innerHTML = `
-      <div class="typing-indicator" aria-label="El personaje está escribiendo">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    `;
-
-    messagesContainer.appendChild(typingMessage);
-
-    scrollToLatestMessage(messagesContainer);
+    const typingMessage = showTypingIndicator({
+      messagesContainer,
+      characterImage,
+    });
 
     try {
-      const characterElement = document.querySelector(
-        "[data-character-name]"
-      );
-
-      if (!characterElement) {
-        throw new Error("No se encontró el nombre del personaje");
-      }
-
-      const character = characterElement.textContent.trim();
-      
-      const characterImage = document.querySelector(
-        "[data-character-image]"
-      );
-
-      const imageSrc = characterImage.src;
-      const imageAlt = characterImage.alt;
-
-      const reply = await getCharacterReply(
+      await handleCharacterResponse({
         conversationHistory,
-        character
-      );
-
-      typingMessage.remove();
-
-      const characterMessage = document.createElement("article");
-
-      characterMessage.classList.add(
-        "chat-message",
-        "chat-message--character"
-      );
-
-      characterMessage.innerHTML = `
-        <img
-          class="chat-message__avatar"
-          src="${imageSrc}"
-          alt="${imageAlt}"
-        />
-
-        <div class="chat-message__content">
-          <p class="chat-message__text">${reply}</p>
-
-          <time class="chat-message__time">
-            ${getCurrentTime()}
-          </time>
-        </div>
-      `;
-
-      messagesContainer.appendChild(characterMessage);
-      
-      conversationHistory.push({
-        role: "model",
-        text: reply,
+        character,
+        characterImage,
+        typingMessage,
+        messagesContainer,
+        chatInput,
       });
-
-      scrollToLatestMessage(messagesContainer);
-
-      chatInput.focus();
-    } 
+    }
 
     catch (error) {
       typingMessage.remove();
 
       console.error(error);
 
-      const errorMessage = document.createElement("article");
+      let errorText =
+        "Ocurrió un error al generar la respuesta.";
 
-      errorMessage.classList.add(
-        "chat-message",
-        "chat-message--character"
+      if (error.status === 429) {
+        errorText =
+          "Llegamos al límite diario de consultas de la IA. Probá nuevamente un poco más tarde.";
+      }
+
+      const errorMessage = createErrorMessage(
+        errorText,
+        getCurrentTime()
       );
-
-      errorMessage.innerHTML = `
-        <p class="chat-message__text">
-          Ocurrió un error al generar la respuesta.
-        </p>
-
-        <time class="chat-message__time">
-          ${getCurrentTime()}
-        </time>
-      `;
 
       messagesContainer.appendChild(errorMessage);
 

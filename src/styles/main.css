@@ -41,3 +41,42 @@ button {
   font-weight: 700;
   padding: 8px 12px;
 }
+
+:root {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  color: #f5f5f5;
+  background-color: #17151d;
+}
+
+:root[data-theme="dark"] body {
+  background-color: #17151d;
+}
+
+:root[data-theme="dark"] .navbar,
+:root[data-theme="dark"] .chat__header,
+:root[data-theme="dark"] .chat__form {
+  background-color: #24212c;
+  color: #f5f5f5;
+}
+
+:root[data-theme="dark"] .chat,
+:root[data-theme="dark"] .characters {
+  background-color: #17151d;
+  color: #f5f5f5;
+}
+
+:root[data-theme="dark"] .character-card,
+:root[data-theme="dark"] .chat-message__content {
+  background-color: #2c2835;
+  color: #f5f5f5;
+}
+
+:root[data-theme="dark"] .chat__back,
+:root[data-theme="dark"] .chat__clear-button {
+  background-color: #383342;
+  color: #f5f5f5;
+}

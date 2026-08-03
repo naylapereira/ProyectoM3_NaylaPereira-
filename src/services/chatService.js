@@ -13,7 +13,13 @@ export async function getCharacterReply(history, character) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.error || "No se pudo obtener una respuesta");
+    const error = new Error(
+      data.error || "No se pudo obtener una respuesta"
+    );
+
+    error.status = response.status;
+
+    throw error;
   }
 
   return data.reply;

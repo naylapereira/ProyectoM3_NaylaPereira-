@@ -3,6 +3,8 @@ import { homeView } from "./views/homeView.js";
 import { charactersView } from "./views/charactersView.js";
 import { aboutView } from "./views/aboutView.js";
 import { selectCharacter } from "./handlers/characterHandler.js";
+import { initializeCopyMessages } from "./handlers/copyMessage.js";
+import { initializeTheme, toggleTheme } from "./services/themeService.js";
 
 const app = document.querySelector("#app");
 
@@ -35,6 +37,15 @@ document.addEventListener("click", (event) => {
     return;
   }
 
+  const themeButton = event.target.closest(
+    "[data-theme-toggle]"
+  );
+
+  if (themeButton) {
+    toggleTheme();
+    return;
+  }
+
   const navigationElement = event.target.closest("[data-link]");
 
   if (!navigationElement) {
@@ -51,3 +62,5 @@ if (window.location.pathname === "/") {
 }
 
 renderView();
+initializeCopyMessages();
+initializeTheme();
