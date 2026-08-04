@@ -15,12 +15,17 @@ export function navbar() {
 
       <button
         type="button"
+        class="theme-toggle"
         data-theme-toggle
-        aria-label="Cambiar modo de color"
-        title="Cambiar modo de color"
+        aria-label="Activar modo oscuro"
       >
-        🌙
-      </button>
-    </nav>
+        <span class="theme-toggle__icon" aria-hidden="true">
+          🌙
+        </span>
+
+        <span class="theme-toggle__tooltip" data-theme-tooltip>
+          Activar modo oscuro
+        </span>
+      </button>    </nav>
   `;
 }

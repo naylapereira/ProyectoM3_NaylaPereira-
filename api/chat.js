@@ -83,11 +83,19 @@ export default async function handler(request, response) {
     return response.status(200).json({
       reply: result.text,
     });
+
   } catch (error) {
     console.error("Error al consultar Gemini:", error);
+    
+    const status = error.status || 500;
 
-    return response.status(500).json({
-      error: "No se pudo generar la respuesta",
+    const message =
+      status === 429
+        ? "Se alcanzó el límite de consultas de Gemini"
+        : "No se pudo generar la respuesta";
+
+    return response.status(status).json({
+      error: message,
     });
   }
 }

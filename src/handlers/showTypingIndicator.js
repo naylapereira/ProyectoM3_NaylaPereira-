@@ -3,15 +3,10 @@ import { scrollToLatestMessage } from "../utils/scroll.js";
 
 export function showTypingIndicator({
   messagesContainer,
-  characterImage,
 }) {
-  const typingMessage = createTypingMessage(
-    characterImage.src,
-    characterImage.alt
-  );
+  const typingMessage = createTypingMessage();
 
   messagesContainer.appendChild(typingMessage);
-
   scrollToLatestMessage(messagesContainer);
 
   return typingMessage;

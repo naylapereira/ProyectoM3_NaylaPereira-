@@ -86,7 +86,6 @@ export function initializeChat() {
 
     const typingMessage = showTypingIndicator({
       messagesContainer,
-      characterImage,
     });
 
     try {

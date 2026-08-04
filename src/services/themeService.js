@@ -26,10 +26,21 @@ export function toggleTheme() {
 
 function updateThemeButton(theme) {
   const button = document.querySelector("[data-theme-toggle]");
+  const icon = button?.querySelector(".theme-toggle__icon");
+  const tooltip = button?.querySelector("[data-theme-tooltip]");
 
-  if (!button) {
+  if (!button || !icon || !tooltip) {
     return;
   }
 
-  button.textContent = theme === "light" ? "🌙" : "☀️";
+  const isLightTheme = theme === "light";
+
+  icon.textContent = isLightTheme ? "🌙" : "☀️";
+
+  const label = isLightTheme
+    ? "Activar modo oscuro"
+    : "Activar modo claro";
+
+  button.setAttribute("aria-label", label);
+  tooltip.textContent = label;
 }

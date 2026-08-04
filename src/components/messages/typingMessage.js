@@ -8,12 +8,6 @@ export function createTypingMessage(imageSrc, imageAlt) {
   );
 
   message.innerHTML = `
-    <img
-      class="chat-message__avatar"
-      src="${imageSrc}"
-      alt="${imageAlt}"
-    />
-
     <div
       class="typing-indicator"
       aria-label="El personaje está escribiendo"
