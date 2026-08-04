@@ -2,6 +2,8 @@ import { navbar } from "./components/navbar.js";
 import { homeView } from "./views/homeView.js";
 import { charactersView } from "./views/charactersView.js";
 import { aboutView } from "./views/aboutView.js";
+import { chatView } from "./views/chatView.js";
+import { initializeChat } from "./chat.js";
 import { selectCharacter } from "./handlers/characterHandler.js";
 import { initializeCopyMessages } from "./handlers/copyMessage.js";
 import { initializeTheme, toggleTheme } from "./services/themeService.js";
@@ -14,8 +16,50 @@ const routes = {
   "/about": aboutView,
 };
 
+const characters = {
+  furia: {
+    name: "Furia",
+    image: "/src/assets/characters/furia.png",
+  },
+  alegria: {
+    name: "Alegría",
+    image: "/src/assets/characters/alegria.png",
+  },
+  tristeza: {
+    name: "Tristeza",
+    image: "/src/assets/characters/tristeza.png",
+  },
+  desagrado: {
+    name: "Desagrado",
+    image: "/src/assets/characters/desagrado.png",
+  },
+  temor: {
+    name: "Temor",
+    image: "/src/assets/characters/temor.png",
+  },
+};
+
 function renderView() {
   const path = window.location.pathname;
+
+  if (path.startsWith("/chat/")) {
+    const characterId = path.split("/")[2];
+    const character = characters[characterId];
+
+    if (!character) {
+      navigateTo("/chat");
+      return;
+    }
+
+    app.innerHTML = `
+      ${navbar()}
+      ${chatView(character.name, character.image)}
+    `;
+
+    initializeChat();
+    return;
+  }
+
   const selectedView = routes[path] || homeView;
 
   app.innerHTML = `
@@ -33,7 +77,16 @@ document.addEventListener("click", (event) => {
   const characterCard = event.target.closest("[data-character]");
 
   if (characterCard) {
-    selectCharacter(characterCard, app);
+    selectCharacter(characterCard);
+    return;
+  }
+  
+  const chatBackButton = event.target.closest(
+    "[data-chat-back]"
+  );
+
+  if (chatBackButton) {
+    window.history.back();
     return;
   }
 

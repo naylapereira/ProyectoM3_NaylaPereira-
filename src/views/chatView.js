@@ -8,7 +8,8 @@ export function chatView(
         <button
           type="button"
           class="chat__back"
-          data-link="/chat"
+          data-chat-back
+          aria-label="Volver a personajes"
         >
           ←
         </button>
