@@ -19,23 +19,23 @@ const routes = {
 const characters = {
   furia: {
     name: "Furia",
-    image: "/src/assets/characters/furia.png",
+    image: "/characters/furia.png",
   },
   alegria: {
     name: "Alegría",
-    image: "/src/assets/characters/alegria.png",
+    image: "/characters/alegria.png",
   },
   tristeza: {
     name: "Tristeza",
-    image: "/src/assets/characters/tristeza.png",
+    image: "/characters/tristeza.png",
   },
   desagrado: {
     name: "Desagrado",
-    image: "/src/assets/characters/desagrado.png",
+    image: "/characters/desagrado.png",
   },
   temor: {
     name: "Temor",
-    image: "/src/assets/characters/temor.png",
+    image: "/characters/temor.png",
   },
 };
 
@@ -56,6 +56,7 @@ function renderView() {
       ${chatView(character.name, character.image)}
     `;
 
+    initializeTheme();
     initializeChat();
     return;
   }
@@ -66,6 +67,8 @@ function renderView() {
     ${navbar()}
     ${selectedView()}
   `;
+
+  initializeTheme();
 }
 
 function navigateTo(path) {
@@ -116,4 +119,3 @@ if (window.location.pathname === "/") {
 
 renderView();
 initializeCopyMessages();
-initializeTheme();
