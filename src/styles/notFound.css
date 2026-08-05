@@ -1,0 +1,35 @@
+.not-found {
+  min-height: calc(100dvh - 64px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.not-found__content {
+  max-width: 420px;
+}
+
+.not-found__code {
+  margin: 0;
+  font-size: 72px;
+  font-weight: bold;
+  color: #7c3aed;
+}
+
+.not-found__title {
+  margin: 16px 0 8px;
+}
+
+.not-found__description {
+  margin-bottom: 24px;
+  color: #666;
+}
+
+.not-found__button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}

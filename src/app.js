@@ -8,6 +8,7 @@ import { selectCharacter } from "./handlers/characterHandler.js";
 import { initializeCopyMessages } from "./handlers/copyMessage.js";
 import { initializeTheme, toggleTheme } from "./services/themeService.js";
 import { initializeMobileViewport } from "./utils/mobileViewport.js";
+import { notFoundView } from "./views/notFoundView.js";
 
 const app = document.querySelector("#app");
 
@@ -40,20 +41,44 @@ const characters = {
   },
 };
 
+function normalizePath(path) {
+  if (path !== "/" && path.endsWith("/")) {
+    return path.slice(0, -1);
+  }
+
+  return path;
+}
+
 function renderView() {
-  const path = window.location.pathname;
+  const currentPath = window.location.pathname;
+  const path = normalizePath(currentPath);
+
+  if (path !== currentPath) {
+    window.history.replaceState(
+      {},
+      "",
+      `${path}${window.location.search}${window.location.hash}`
+    );
+  }
 
   document.body.classList.toggle(
     "chat-open",
     path.startsWith("/chat/")
   );
 
-  if (path.startsWith("/chat/")) {
-    const characterId = path.split("/")[2];
+  const characterRoute = path.match(/^\/chat\/([^/]+)$/);
+
+  if (characterRoute) {
+    const characterId = characterRoute[1];
     const character = characters[characterId];
 
     if (!character) {
-      navigateTo("/chat");
+      app.innerHTML = `
+        ${navbar()}
+        ${notFoundView()}
+      `;
+
+      initializeTheme();
       return;
     }
 
@@ -67,7 +92,17 @@ function renderView() {
     return;
   }
 
-  const selectedView = routes[path] || homeView;
+  if (path.startsWith("/chat/")) {
+    app.innerHTML = `
+      ${navbar()}
+      ${notFoundView()}
+    `;
+
+    initializeTheme();
+    return;
+  }
+
+  const selectedView = routes[path] || notFoundView;
 
   app.innerHTML = `
     ${navbar()}

@@ -5,7 +5,15 @@
       "destination": "/index.html"
     },
     {
+      "source": "/home/",
+      "destination": "/index.html"
+    },
+    {
       "source": "/chat",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/chat/",
       "destination": "/index.html"
     },
     {
@@ -13,7 +21,15 @@
       "destination": "/index.html"
     },
     {
+      "source": "/chat/:character/",
+      "destination": "/index.html"
+    },
+    {
       "source": "/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/about/",
       "destination": "/index.html"
     }
   ]
