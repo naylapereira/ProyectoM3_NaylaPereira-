@@ -38,6 +38,9 @@ export function addMessage(character, message) {
 }
 
 export function clearConversation(character) {
-  conversationsByCharacter[character] = [];
+  const conversation = getConversation(character);
+
+  conversation.length = 0;
+
   saveConversations(conversationsByCharacter);
 }

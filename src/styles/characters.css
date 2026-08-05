@@ -1,6 +1,12 @@
 .characters {
-  min-height: 100vh;
+  height: calc(var(--app-height, 100dvh) - 64px);
+  min-height: 0;
   padding: 32px 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 
 .characters__content {

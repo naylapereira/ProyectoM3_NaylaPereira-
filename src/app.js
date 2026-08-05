@@ -7,6 +7,7 @@ import { initializeChat } from "./chat.js";
 import { selectCharacter } from "./handlers/characterHandler.js";
 import { initializeCopyMessages } from "./handlers/copyMessage.js";
 import { initializeTheme, toggleTheme } from "./services/themeService.js";
+import { initializeMobileViewport } from "./utils/mobileViewport.js";
 
 const app = document.querySelector("#app");
 
@@ -41,6 +42,11 @@ const characters = {
 
 function renderView() {
   const path = window.location.pathname;
+
+  document.body.classList.toggle(
+    "chat-open",
+    path.startsWith("/chat/")
+  );
 
   if (path.startsWith("/chat/")) {
     const characterId = path.split("/")[2];
@@ -117,5 +123,6 @@ if (window.location.pathname === "/") {
   window.history.replaceState({}, "", "/home");
 }
 
+initializeMobileViewport();
 renderView();
 initializeCopyMessages();

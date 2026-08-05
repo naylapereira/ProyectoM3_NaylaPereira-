@@ -1,5 +1,7 @@
 .chat {
-  height: calc(100vh - 64px);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   overflow: hidden;
@@ -324,4 +326,29 @@
 .clear-modal__confirm {
   background: #8b5cf6;
   color: white;
+}
+
+.chat__messages:not(:has(.chat-message:nth-child(2))) {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.navbar,
+.chat__header,
+.chat__form {
+  flex-shrink: 0;
+}
+
+body.chat-open {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+body.chat-open #app {
+  height: var(--app-height, 100dvh);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
 }

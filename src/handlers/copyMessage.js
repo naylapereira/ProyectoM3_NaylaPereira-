@@ -1,3 +1,31 @@
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch (_) {}
+  }
+
+  const textArea = document.createElement("textarea");
+
+  textArea.value = text;
+  textArea.style.position = "fixed";
+  textArea.style.left = "-9999px";
+
+  document.body.appendChild(textArea);
+
+  textArea.focus();
+  textArea.select();
+
+  const copied = document.execCommand("copy");
+
+  document.body.removeChild(textArea);
+
+  if (!copied) {
+    throw new Error("No se pudo copiar");
+  }
+}
+
 export function initializeCopyMessages() {
   document.addEventListener("click", async (event) => {
     const copyButton = event.target.closest(
@@ -12,7 +40,7 @@ export function initializeCopyMessages() {
     const messageText = decodeURIComponent(encodedText);
 
     try {
-      await navigator.clipboard.writeText(messageText);
+      await copyText(messageText);
 
       copyButton.textContent = "✅";
 

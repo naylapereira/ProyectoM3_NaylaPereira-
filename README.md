@@ -1,44 +1,37 @@
 # Intensamente Chat
 
-Single Page Application responsive que permite conversar con cinco personajes de Intensamente mediante Google Gemini AI.
+Aplicación web desarrollada como Proyecto Integrador del Módulo 3.
 
-## Personajes
+La aplicación permite conversar con distintos personajes de la película **Intensamente** utilizando la API de Google Gemini. Cada personaje mantiene su propia personalidad y conserva el historial de conversación de forma independiente.
 
-- **Alegría:** responde de forma optimista y positiva.
-- **Tristeza:** escucha con empatía y brinda apoyo.
-- **Furia:** reacciona de manera impulsiva y enérgica.
-- **Temor:** responde con cautela y preocupación.
-- **Desagrado:** mantiene una actitud crítica y sarcástica.
+---
 
-Cada personaje tiene su propia personalidad, mensaje de bienvenida e historial de conversación.
+## Tecnologías utilizadas
+
+- HTML5
+- CSS3
+- JavaScript (ES Modules)
+- Google Gemini API
+- Vercel Serverless Functions
+- Vite
+- Vitest
+
+---
 
 ## Funcionalidades
 
-- Navegación SPA con History API.
-- Rutas `/home`, `/chat` y `/about`.
-- Selección entre cinco personajes.
-- Respuestas generadas con Google Gemini AI.
+- Navegación mediante SPA.
+- Rutas con History API.
+- URL independiente para cada personaje.
+- Conversaciones con inteligencia artificial.
 - Historial independiente por personaje.
-- Persistencia con `localStorage`.
-- Indicador animado de escritura.
-- Timestamps en los mensajes.
-- Copiar respuestas al portapapeles.
-- Borrar historial.
-- Modo claro y oscuro.
-- Diseño mobile-first para celular, tablet y computadora.
-- Manejo de errores y límite de consultas.
-- Tests unitarios con Vitest y fetch simulado.
+- Persistencia mediante LocalStorage.
+- Modo claro / oscuro.
+- Diseño responsive.
+- Eliminación de historial con confirmación.
+- Indicador de escritura mientras el personaje responde.
 
-## Tecnologías
-
-- JavaScript Vanilla
-- HTML
-- CSS
-- Vite
-- Google Gemini AI
-- Vercel Functions
-- Vitest
-- Git y GitHub
+---
 
 ## Instalación
 
@@ -48,39 +41,41 @@ Clonar el repositorio:
 git clone https://github.com/naylapereira/ProyectoM3_NaylaPereira-.git
 ```
 
-Ingresar a la carpeta:
+Ingresar al proyecto:
 
 ```bash
 cd ProyectoM3_NaylaPereira-
 ```
 
-Instalar las dependencias:
+Instalar dependencias:
 
 ```bash
 npm install
 ```
 
-## Variables de entorno
-
-Crear un archivo `.env` a partir de `.env.example` y agregar:
+Crear un archivo `.env` con la siguiente variable:
 
 ```env
 GEMINI_API_KEY=TU_API_KEY
 ```
 
-## Ejecutar el proyecto
+---
 
-Iniciar el entorno de desarrollo:
+## Ejecutar en desarrollo
+
+Para iniciar el proyecto:
 
 ```bash
 npx vercel dev
 ```
 
-La aplicación estará disponible en:
+Luego abrir:
 
 ```
 http://localhost:3000
 ```
+
+---
 
 ## Ejecutar los tests
 
@@ -88,38 +83,89 @@ http://localhost:3000
 npm test
 ```
 
-o ejecutar una única vez:
+---
 
-```bash
-npm test -- --run
+## Deploy
+
+Aplicación desplegada en Vercel.
+
+**Producción:**
+
 ```
-
-## Uso de Inteligencia Artificial
-
-Durante el desarrollo del proyecto se utilizó ChatGPT como herramienta de asistencia para resolver dudas, modularizar el código, mejorar la organización del proyecto y generar ejemplos de pruebas unitarias.
-
-A continuación se incluyen ejemplos de consultas realizadas y sus respectivas respuestas.
-
-### Prompt 1
-
-*(Insertar captura del prompt 1)*
-
-### Respuesta 1
-
-*(Insertar captura de la respuesta 1)*
+https://pi-m3-black.vercel.app
+```
 
 ---
 
-### Prompt 2
+## Estructura del proyecto
 
-*(Insertar captura del prompt 2)*
+```
+ProyectoM3_NaylaPereira-
+│
+├── api
+│   └── chat.js
+│
+├── src
+│   ├── assets
+│   ├── components
+│   ├── handlers
+│   ├── services
+│   ├── styles
+│   ├── utils
+│   ├── views
+│   ├── app.js
+│   ├── chat.js
+│   └── utils.js
+│
+├── tests
+│   ├── app.test.js
+│   └── utils.test.js
+│
+├── index.html
+├── package.json
+├── package-lock.json
+├── .env.example
+└── README.md
+```
 
-### Respuesta 2
+---
 
-*(Insertar captura de la respuesta 2)*
+## Tests implementados
 
-## Autora
+Se realizaron pruebas unitarias utilizando **Vitest**.
 
-**Nayla Pereira**
+Entre ellas:
 
-Proyecto Integrador M3 - Desarrollo Web.
+- Obtención de la hora actual.
+- Obtención del nombre del personaje.
+- Mensajes de bienvenida.
+- Simulación de `fetch` para las respuestas de la API.
+- Manejo de errores de la API.
+
+---
+
+# Documentación del uso de IA
+
+Durante el desarrollo se utilizó inteligencia artificial como herramienta de asistencia para resolver dudas técnicas y mejorar algunas funcionalidades de la aplicación.
+
+## Pregunta y respuesta 1
+
+![Pregunta y respuesta](docs/images/chatGPT-1.png)
+
+![Respuesta](docs/images/chatGPT-2.png)
+
+---
+
+## Pregunta y respuesta 2
+
+![Pregunta y respuesta](docs/images/chatGPT-3.png)
+
+![Respuesta](docs/images/chatGPT-4.png)
+
+---
+
+## Autor
+
+Nayla Pereira
+
+Proyecto Integrador - Módulo 3

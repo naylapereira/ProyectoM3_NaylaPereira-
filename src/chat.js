@@ -49,7 +49,9 @@ export function initializeChat() {
     characterImage,
   });
 
-  scrollToLatestMessage(messagesContainer, false);
+  if (conversationHistory.length > 1) {
+    scrollToLatestMessage(messagesContainer, false);
+  }
 
   const welcomeMessage = createWelcomeMessage({
     text: getWelcomeMessage(character),
