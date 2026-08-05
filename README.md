@@ -101,31 +101,30 @@ https://pi-m3-black.vercel.app
 
 ```
 ProyectoM3_NaylaPereira-
-│
-├── api
+├── api/
 │   └── chat.js
-│
-├── src
-│   ├── assets
-│   ├── components
-│   ├── handlers
-│   ├── services
-│   ├── styles
-│   ├── utils
-│   ├── views
+├── docs/
+│   └── images/
+├── public/
+│   └── characters/
+├── src/
+│   ├── components/
+│   ├── handlers/
+│   ├── services/
+│   ├── styles/
+│   ├── utils/
+│   ├── views/
 │   ├── app.js
 │   ├── chat.js
 │   └── utils.js
-│
-├── tests
+├── tests/
 │   ├── app.test.js
 │   └── utils.test.js
-│
+├── .env.example
 ├── index.html
 ├── package.json
-├── package-lock.json
-├── .env.example
-└── README.md
+├── README.md
+└── vercel.json
 ```
 
 ---
