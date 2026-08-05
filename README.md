@@ -2,19 +2,47 @@
 
 Aplicación web desarrollada como Proyecto Integrador del Módulo 3.
 
-La aplicación permite conversar con distintos personajes de la película **Intensamente** utilizando la API de Google Gemini. Cada personaje mantiene su propia personalidad y conserva el historial de conversación de forma independiente.
+## Descripción
+
+**Intensamente Chat** es una Single Page Application (SPA) desarrollada con JavaScript, HTML y CSS que permite mantener conversaciones con los personajes de la película *Intensamente* mediante inteligencia artificial.
+
+La aplicación utiliza la API de Google Gemini para generar respuestas acordes a la personalidad de cada personaje. Cada conversación mantiene un historial independiente que se guarda en el navegador mediante **LocalStorage**, permitiendo continuar las conversaciones incluso después de recargar la página.
+
+La comunicación con Gemini se realiza a través de una **Vercel Serverless Function**, evitando exponer la clave de la API en el cliente y mejorando la seguridad de la aplicación.
+
+---
+
+## Capturas de la aplicación
+
+### Inicio
+
+![Inicio](docs/images/home.png)
+
+### Selección de personajes
+
+![Selección de personajes](docs/images/characters.png)
+
+### Chat
+
+![Chat](docs/images/chat.png)
+
+### Modo oscuro
+
+![Modo oscuro](docs/images/dark-mode.png)
 
 ---
 
 ## Tecnologías utilizadas
 
-- HTML5
-- CSS3
-- JavaScript (ES Modules)
-- Google Gemini API
-- Vercel Serverless Functions
-- Vite
-- Vitest
+| Área | Tecnología |
+|------|------------|
+| Frontend | HTML5, CSS3 y JavaScript |
+| Desarrollo | Vite |
+| Inteligencia Artificial | Google Gemini |
+| Backend | Vercel Serverless Functions |
+| Persistencia | LocalStorage |
+| Testing | Vitest |
+| Deploy | Vercel |
 
 ---
 
